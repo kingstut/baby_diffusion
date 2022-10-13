@@ -59,7 +59,7 @@ class UNet():
         self.out_layer = nn.Conv2d(64, 2, 1)
 
     def forward(self, x, t): 
-
+        
         #x = self.positional_embedding(x)
         x = self.d_1_1(x)
         d1 = self.d_1_2(x) 
@@ -119,8 +119,7 @@ def training(dataloader):
     epochs = 2
 
     for epoch in range(epochs):
-        for step, x_0 in enumerate(dataloader): 
-            
+        for step, x_0 in enumerate(dataloader):            
             optimizer.zero_grad()
 
             t = random.randint(0, time_steps)
@@ -128,7 +127,6 @@ def training(dataloader):
             e_theta = e_model(math.sqrt(alpha_dash_t(t))*x_0 + math.sqrt(1 - alpha_dash_t(t))*e, t)
             
             loss = nn.MSEloss(e, e_theta)
-
             loss.backward()
             optimizer.step()
 
